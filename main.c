@@ -207,12 +207,12 @@ int main(){
     char opcao_1;
     char opcao_2;
     char opcao_3;
-    int tamanho = 2;
+    int tamanho = 0;
 
     //chamar estruturas
-    Pokedex pokedex[tamanho];    
+    Pokedex pokedex[721];    
     Colecao colecao;
-    //*pokedexP = malloc(tamanho * sizeof(Pokedex));
+    
  
     //alocação da pokedex
 
