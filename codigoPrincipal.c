@@ -105,9 +105,14 @@ int main(){
     int codigoPokemonIncluir;
     int indiceIncluir = -1;
     int codiogoPokemonExcluir;
-    int opcao_1 = 0;
+
+    //menus
+    char opcao_1;
     char opcao_2;
+    char opcao_3;
     int tamanho = 2;
+
+    //chamar estruturas
     Pokedex pokedex[tamanho];    
     Colecao colecao;
     //*pokedexP = malloc(tamanho * sizeof(Pokedex));
@@ -119,6 +124,7 @@ int main(){
     carregarDados("pokedexUsuario.dat",&pokedex, tamanho);
 
      do {
+        printf("------------ Bem - vindo! ------------\n");
         printf("------------ Menu Principal -----------\n");
         printf("\nEscolha uma opção:\n");
         printf("1. Menu da Pokedex\n");
@@ -215,8 +221,39 @@ int main(){
                                 break;
                             }
 
-                break;
-            break;// break do case 2
+                break;//break do case2
+            case 3:
+                        printf("\nMenu:\n");
+                        printf("-- A. Colocar um Pokemon na mochila\n");
+                        printf("-- B. Remover um Pokemon da mochila\n");
+                        printf("-- C. Verificar os pokemons que há na mochila\n");
+                        printf("-- D. Exportar os dados para um arquivo csv\n");
+                        printf("-- F. sair\n");
+                        scanf("%c", &opcao_3);
+
+                            switch (opcao_3)
+                            {
+                            case 'a':
+                            case 'A':
+                                
+                                break;
+                            case 'b':
+                            case 'B': 
+                                break;
+                            case 'c':
+                            case 'C':
+                                break;
+                            case 'd':
+                            case 'D':
+                                break;
+                            case 'f':
+                            case 'F':
+                                break;
+                            default:
+                                break;
+                            }
+
+                break;//break do case2
             case 0:
                 printf("Encerrando o programa.\n");
                 break;
