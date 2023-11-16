@@ -347,37 +347,51 @@ int main(){
                                 }// switch para as opções da coleção
                 break;//break do case2
             case 3:
-                        printf("\nMenu:\n");
-                        printf("-- A. Colocar um Pokemon na mochila\n");
-                        printf("-- B. Remover um Pokemon da mochila\n");
-                        printf("-- C. Verificar os pokemons que há na mochila\n");
-                        printf("-- D. Exportar os dados para um arquivo csv\n");
-                        printf("-- F. sair\n");
-                        scanf("%c", &opcao_3);
-
-                            switch (opcao_3)
-                            {
-                            case 'a':
-                            case 'A':
-                                
-                                break;
-                            case 'b':
-                            case 'B': 
-                                break;
-                            case 'c':
-                            case 'C':
-                                break;
-                            case 'd':
-                            case 'D':
-                                break;
-                            case 'f':
-                            case 'F':
-                                break;
-                            default:
-                                break;
+                                    do {
+                    printf("\nMenu:\n");
+                    printf("1. Colocar um Pokemon na mochila\n");
+                    printf("2. Remover um Pokemon da mochila\n");
+                    printf("3. Verificar os pokemons que há na mochila\n");
+                    printf("4. Sair\n");
+                    printf("Escolha uma opcao: ");
+                    scanf("%d", &opcao);
+            
+                    switch (opcao) {
+                        case 1:
+                            if (mochila.pokemons < 6) {
+                                for(int i =0; i<6; i++){
+                                comparaPokemon(&colecao, &mochila, i);
+                                }//for para 6 pokemons   
+                            } else {
+                                printf("A mochila está cheia!\n");
                             }
-
-                break;//break do case2
+                            break;
+                        case 2:
+                            if (mochila.pokemons > 0) {
+                                printf("Digite o codigo do Pokemon que deseja remover da mochila: ");
+                                scanf("%d", &codigo);
+                                removerPokemon(&mochila, codigo);
+                            } else {
+                                printf("A mochila esta vazia!\n");
+                            }
+                            break;
+                        case 3:
+                                printf("Pokemons na mochila:\n");
+                                for (int i = 0; i < mochila.pokemons; i++) {
+                                printf("Pokemon %d: Codigo %d\n", i + 1, colecao.mochila[i].codigo);
+                            }
+                            break;
+                        case 4:
+                            printf("Saindo do programa.\n");
+                            break;
+                        default:
+                            printf("Opcao invalida! Escolha novamente.\n");
+                            break;
+                    }
+                } while (opcao != 4);
+                
+            break;//break do case3
+            
             case 0:
                 printf("Encerrando o programa.\n");
                 break;
