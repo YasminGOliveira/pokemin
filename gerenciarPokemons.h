@@ -38,9 +38,17 @@ typedef struct{
     
 }Pokedex;
 
+// Definição da estrutura da Mochila
+typedef struct{
+    // estrutura Pokemon coleção colocar(chamar)
+    int pokemons[6];
+}Mochila;
+
+//estrutura colecao
 typedef struct{
     int *pokemons;
     int tamanho;
+    Mochila mochila;
 } Colecao ;
 
 // ------------------------------- Funções para a Pokedex ---------------------------------------------------------
