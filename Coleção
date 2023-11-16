@@ -47,7 +47,7 @@ void listaPokemons(Colecao *colecao, Pokedex *pokedex){
     //transformar os códigos em nomes e exibir os pokemons
     printf("Pokémons na coleção: ");
     for(int i=0; i<colecao->tamanho; i++){
-        for(int j=0; j<721; j++){
+        for(int j=0; j<pokedex->tamanho; j++){
             if(colecao->pokemons[i] == pokedex[j].numero){
                 indiceListar = j;
                 printf("%s ", pokedex[indiceListar].nome);
@@ -68,7 +68,7 @@ void pesquisaPokemon(Pokedex *pokedex){
     leString(nomePesquisa, 20);
 
     //busca as informações do pokemon requisitado
-    for(int i=0; i<721; i++){
+    for(int i=0; i<pokedex->tamanho; i++){
         if(strcasecmp(nomePesquisa, pokedex[i].nome)==0){
             indicePesquisa = i;
             break;
@@ -114,7 +114,7 @@ void excluiPokemon(Pokedex *pokedex, Colecao *colecao){
     leString(nomeExcluir, 20);
 
     //busca as informações do pokemon requisitado
-    for(int i=0; i<721; i++){
+    for(int i=0; i<pokedex->tamanho; i++){
         if(strcasecmp(nomeExcluir, pokedex[i].nome)==0){
             indiceExcluir = i;
             break;
@@ -174,7 +174,7 @@ int main(){
     int indiceIncluir = -1;
     int codiogoPokemonExcluir;
 
-    Pokedex minhaPokedex[721];
+    Pokedex minhaPokedex[pokedex->tamanho];
     Colecao minhaColecao;
 
     //chamar a função para iniciar a coleção
@@ -199,7 +199,7 @@ int main(){
                 leString(incluirPokemon, 20);
 
                 //transforma o nome do pokémon para código
-                for(int i=0; i<721; i++){
+                for(int i=0; i<pokedex->tamanho; i++){
                     if(strcasecmp(incluirPokemon, minhaPokedex[i].nome)==0){
                         indiceIncluir = i;
                         break;
@@ -244,9 +244,3 @@ int main(){
 
     return 0;
 }//main
-
-
-
-typedef struct {
-
-} Mochila ;
