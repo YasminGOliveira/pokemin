@@ -133,8 +133,6 @@ int main(){
         printf("0. Sair\n");
         scanf("%d", &opcao_1);
 
-        printf("7. Adicionar Pokemon na Coleção\n");
-
         switch (opcao_1){
             // case para caso o usuario tenha escolhido a opção 
             case 1:
@@ -153,10 +151,9 @@ int main(){
                                     case 'a':
                                     case 'A':
 
-                                    tamanho += 1; 
-                                    for(int contador = 0; contador <tamanho; contador++){
-                                    pokedex[contador] = cadastrarPokemonPokedex();
-                                    }
+                                    pokedex[tamanho] = cadastrarPokemonPokedex();
+                                    tamanho+=1; 
+                                               
                                     
                                      break;
 
@@ -208,6 +205,27 @@ int main(){
                             {
                             case 'a':
                             case 'A':
+                                    //pede ao usuário o nome do pokémon que deseja incluir 
+                                    printf("Digite o nome do pokémon que deseja incluir na coleção: ");
+                                    leString(incluirPokemon, 20);
+
+                                    //transforma o nome do pokémon para código
+                                    for(int i=0; i<721; i++){
+                                        if(strcasecmp(incluirPokemon, pokedex[i].nome)==0){
+                                            indiceIncluir = i;
+                                            break;
+                                        }//if
+                                    }//for
+
+                                    //verifica se há ou não pokemon a ser adicionado
+                                    if(indiceIncluir==-1){
+                                        printf("Esse pokémon não existe, tente novamente!\n");
+                                    } else {
+                                        //atribui o número do código a ser adicionado
+                                        codigoPokemonIncluir = pokedex[indiceIncluir].numero;
+                                        //chama a função e passa os argumentos
+                                        adicionaPokemon(&colecao, codigoPokemonIncluir);  
+                                    }//else
                                 
                                 break;
                             case 'b':
@@ -216,11 +234,20 @@ int main(){
                                 break;
                             case 'c':
                             case 'C':
+                                pesquisarPokedex(pokedex, tamanho);
                                 break;
-                            default:
-                                break;
-                            }
-
+                                case 'e':
+                                case 'E':
+                                    excluiPokemon(&pokedex, &colecao);
+                                     break;
+                                case 'v':
+                                case 'V':
+                                    printf("Voltando para o Menu Principal! ");
+                                    break;
+                                default:
+                                    printf("Opção Invalida!\n");
+                                    break;
+                                }// switch para as opções da coleção
                 break;//break do case2
             case 3:
                         printf("\nMenu:\n");
