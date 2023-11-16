@@ -15,6 +15,7 @@ já capturados.*/
 typedef struct{
     int *pokemons;
     int tamanho;
+    Mochila mochila;
 } Colecao ;
 
 //função para inicializar a coleção, excluindo a possibilidade de ter um valor lixo
