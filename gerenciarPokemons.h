@@ -37,14 +37,15 @@ typedef struct{
 }Pokedex;
 
 typedef struct{
+    int pokemons[6];
+}Mochila;
+
+typedef struct{
     int *pokemons;
     int tamanho;
     Mochila mochila;
 }Colecao;
 
-typedef struct{
-    int pokemons[6];
-}Mochila;
 
 // ------------------------------- Funções para a Pokedex ---------------------------------------------------------
 // função para cadastar pokemons
