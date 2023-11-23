@@ -21,7 +21,7 @@ void leString(char string[], int tamanho){
 
 //função para inicializar a coleção, excluindo a possibilidade de ter um valor lixo
 void inicializarColecao(Colecao *colecao) {
-    colecao->pokemons = (int*) mallonar oc (1 * sizeof(int));
+    colecao->pokemons = (int*) malloc (1 * sizeof(int));
     colecao->tamanho = 0;
 }//inicializarColecao
 
