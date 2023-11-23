@@ -23,8 +23,6 @@ typedef struct{
     int ataqueEspecial;
     int defesaEspecial;
     int velocidade;
-    
-    //lendario boleano fazer;
     bool lendario;
 
     //tabela de infos gerais
@@ -38,18 +36,15 @@ typedef struct{
     
 }Pokedex;
 
-// Definição da estrutura da Mochila
-typedef struct{
-    // estrutura Pokemon coleção colocar(chamar)
-    int pokemons[6];
-}Mochila;
-
-//estrutura colecao
 typedef struct{
     int *pokemons;
     int tamanho;
     Mochila mochila;
-} Colecao ;
+}Colecao;
+
+typedef struct{
+    int pokemons[6];
+}Mochila;
 
 // ------------------------------- Funções para a Pokedex ---------------------------------------------------------
 // função para cadastar pokemons
