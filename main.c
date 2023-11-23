@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-
+ // ---------------------------------------- FUNÇÕES DE  CARREGAR E SALVAR DADOS ----------------------------------------------------
 void salvarDados(char *pokedexUsuario, Pokedex *pokedex, int tamanho) {
     FILE *arquivo = fopen(pokedexUsuario, "wb");
     if (arquivo != NULL) {
@@ -21,6 +21,7 @@ void carregarDados(char *pokedexUsuario, Pokedex *pokedex, int tamanho) {
     }
 }
 
+// ----------------------------------------- FUNÇÕES COLEÇÃO ------------------------------------------------------
 void inicializarColecao(Colecao *colecao) {
     colecao->pokemons = NULL;
     colecao->tamanho = 0;
@@ -96,9 +97,10 @@ void excluiPokemon(Pokedex pokedex[], Colecao colecao){
         }//else interno
     }//else externo
 }//excluiPokemon
-
+ 
+ // --------------------------------------- FUNÇÕES MOCHILA ----------------------------------------------
 //função para excluir os dados de um pokémon
-void comparaPokemon(Colecao *colecao, Mochila *mochila, int posicao){
+void comparaPokemon(Colecao *colecao, Mochila *mochila, int posicao, Pokedex *minhaPokedex){
     //variavel
     char nome[20];
     int indiceBuscar = -1;
@@ -111,7 +113,7 @@ void comparaPokemon(Colecao *colecao, Mochila *mochila, int posicao){
     leString(nome, 20);
 
     //transforma o nome do pokémon para código
-    for(int i=0; i<pokedex->tamanho; i++){
+    for(int i=0; i<minhaPokedex->tamanho; i++){
     if(strcasecmp(nome, minhaPokedex[i].nome)==0){
         indiceIncluir = i;
             break;
@@ -139,15 +141,16 @@ void comparaPokemon(Colecao *colecao, Mochila *mochila, int posicao){
 
 
 // Função para remover um Pokémon da mochila pelo código
-void removerPokemon(Mochila *mochila, int codigo) {
+void removerPokemon(Mochila *mochila, int codigo, Pokedex* minhaPokedex, Colecao* colecao) {
 
+    char nome[20];
     int codigoPokemonRemover;
     int indiceExcluir = -1;
     int indiceExcluir2 = -1;
     int indiceExcluir3 = -1;
 
     //transforma o nome do pokémon para código
-        for(int i=0; i<pokedex->tamanho; i++){
+        for(int i=0; i<minhaPokedex->tamanho; i++){
         if(strcasecmp(nome, minhaPokedex[i].nome)==0){
             indiceExcluir = i;
                 break;
@@ -175,7 +178,7 @@ void removerPokemon(Mochila *mochila, int codigo) {
 
     }else {
        for(int i=0; i<6; i++){
-            if(codigoPokemonRemover == mochila.pokemons[i]){
+            if(codigoPokemonRemover == mochila->pokemons[i]){
                     indiceExcluir3 = i;
                     break;
             }//if
@@ -188,7 +191,7 @@ void removerPokemon(Mochila *mochila, int codigo) {
         printf("Este pokemon não está na mochila!\n");
 
     }else {
-       mochila.pokemons[indiceExcluir3] = NULL;
+       mochila->pokemons[indiceExcluir3] = NULL;
         printf("Pokemon excluido com sucesso!\n");
     }//if
 
@@ -202,23 +205,27 @@ int main(){
     int codigoPokemonIncluir;
     int indiceIncluir = -1;
     int codiogoPokemonExcluir;
+    int codigo;
 
     //menus
+    int opcao;
     char opcao_1;
     char opcao_2;
     char opcao_3;
     int tamanho = 0;
 
+
     //chamar estruturas
-    Pokedex pokedex[721];    
-    Colecao colecao;
+    Pokedex minhaPokedex[721];  
+    Colecao minhaColecao;  
+    Mochila mochila;
     
  
     //alocação da pokedex
 
     
     // carregar dados do usuario
-    carregarDados("pokedexUsuario.dat",&pokedex, tamanho);
+    carregarDados("pokedexUsuario.dat",&minhaPokedex, tamanho);
 
      do {
         printf("------------ Bem - vindo! ------------\n");
@@ -248,7 +255,7 @@ int main(){
                                     case 'a':
                                     case 'A':
 
-                                    pokedex[tamanho] = cadastrarPokemonPokedex();
+                                    minhaPokedex[tamanho] = cadastrarPokemonPokedex();
                                     tamanho+=1; 
                                                
                                     
@@ -257,17 +264,17 @@ int main(){
                                     case 'b':
                                     case 'B':
 
-                                        listarPokedex(pokedex, tamanho);
+                                        listarPokedex(minhaPokedex, tamanho);
                                         break;
 
                                     case 'c':
                                     case 'C':
 
-                                        pesquisarPokedex(pokedex, tamanho);
+                                        pesquisarPokedex(minhaPokedex, tamanho);
                                         break;
                                     case 'd':
                                     case 'D':
-                                        alterarPokedex(pokedex, tamanho);
+                                        alterarPokedex(minhaPokedex, tamanho);
                                         break;
                                     case 'e':
                                     case 'E':
@@ -275,7 +282,7 @@ int main(){
                                         break;
                                     case 'f':
                                     case 'F':
-                                        exportarDadosPokedexCSV(pokedex, tamanho);
+                                        exportarDadosPokedexCSV(minhaPokedex, tamanho);
                                         break;
                                     case 's':
                                     case 'S':
@@ -308,7 +315,7 @@ int main(){
 
                                     //transforma o nome do pokémon para código
                                     for(int i=0; i<721; i++){
-                                        if(strcasecmp(incluirPokemon, pokedex[i].nome)==0){
+                                        if(strcasecmp(incluirPokemon, minhaPokedex[i].nome)==0){
                                             indiceIncluir = i;
                                             break;
                                         }//if
@@ -319,23 +326,23 @@ int main(){
                                         printf("Esse pokémon não existe, tente novamente!\n");
                                     } else {
                                         //atribui o número do código a ser adicionado
-                                        codigoPokemonIncluir = pokedex[indiceIncluir].numero;
+                                        codigoPokemonIncluir = minhaPokedex[indiceIncluir].numero;
                                         //chama a função e passa os argumentos
-                                        adicionaPokemon(&colecao, codigoPokemonIncluir);  
+                                        adicionaPokemon(&minhaColecao, codigoPokemonIncluir);  
                                     }//else
                                 
                                 break;
                             case 'b':
                             case 'B':
-                                listaPokemonsColecao(colecao, pokedex); 
+                                listaPokemonsColecao(minhaColecao, minhaPokedex); 
                                 break;
                             case 'c':
                             case 'C':
-                                pesquisarPokedex(pokedex, tamanho);
+                                pesquisarPokedex(minhaPokedex, tamanho);
                                 break;
                                 case 'e':
                                 case 'E':
-                                    excluiPokemon(&pokedex, &colecao);
+                                    excluiPokemon(&minhaPokedex, &minhaColecao);
                                      break;
                                 case 'v':
                                 case 'V':
@@ -347,49 +354,50 @@ int main(){
                                 }// switch para as opções da coleção
                 break;//break do case2
             case 3:
-                                    do {
-                    printf("\nMenu:\n");
-                    printf("1. Colocar um Pokemon na mochila\n");
-                    printf("2. Remover um Pokemon da mochila\n");
-                    printf("3. Verificar os pokemons que há na mochila\n");
-                    printf("4. Sair\n");
-                    printf("Escolha uma opcao: ");
-                    scanf("%d", &opcao);
-            
-                    switch (opcao) {
-                        case 1:
-                            if (mochila.pokemons < 6) {
-                                for(int i =0; i<6; i++){
-                                comparaPokemon(&colecao, &mochila, i);
-                                }//for para 6 pokemons   
-                            } else {
-                                printf("A mochila está cheia!\n");
-                            }
-                            break;
-                        case 2:
-                            if (mochila.pokemons > 0) {
-                                printf("Digite o codigo do Pokemon que deseja remover da mochila: ");
-                                scanf("%d", &codigo);
-                                removerPokemon(&mochila, codigo);
-                            } else {
-                                printf("A mochila esta vazia!\n");
-                            }
-                            break;
-                        case 3:
-                                printf("Pokemons na mochila:\n");
-                                for (int i = 0; i < mochila.pokemons; i++) {
-                                printf("Pokemon %d: Codigo %d\n", i + 1, colecao.mochila[i].codigo);
-                            }
-                            break;
-                        case 4:
-                            printf("Saindo do programa.\n");
-                            break;
-                        default:
-                            printf("Opcao invalida! Escolha novamente.\n");
-                            break;
-                    }
-                } while (opcao != 4);
-                
+                            do {
+                                printf("\nMenu:\n");
+                                printf("1. Colocar um Pokemon na mochila\n");
+                                printf("2. Remover um Pokemon da mochila\n");
+                                printf("3. Verificar os pokemons que há na mochila\n");
+                                printf("4. Sair\n");
+                                printf("Escolha uma opcao: ");
+                                scanf("%d", &opcao);
+
+                                switch (opcao) {
+                                    case 1:
+                                        if (mochila.pokemons < 6) {
+                                            for(int i =0; i<6; i++){
+                                            comparaPokemon(&minhaColecao, &mochila, i, &minhaPokedex);
+                                            }//for para 6 pokemons   
+                                        } else {
+                                            printf("A mochila está cheia!\n");
+                                        }
+                                        break;
+                                    case 2:
+                                        if (mochila.pokemons > 0) {
+                                            printf("Digite o codigo do Pokemon que deseja remover da mochila: ");
+                                            scanf("%d", &codigo);
+                                            removerPokemon(&mochila, codigo, &minhaPokedex, &minhaColecao);
+                                        } else {
+                                            printf("A mochila esta vazia!\n");
+                                        }
+                                        break;
+                                    case 3:
+                                            printf("Pokemons na mochila:\n");
+                                            for (int i = 0; i < mochila.pokemons; i++) {
+                                            printf("Pokemon %d: Codigo %d\n", i + 1, minhaColecao.mochila[i].codigo);
+                                        }
+                                        break;
+                                    case 4:
+                                        printf("Saindo do programa.\n");
+                                        break;
+                                    default:
+                                        printf("Opcao invalida! Escolha novamente.\n");
+                                        break;
+                                }
+                            } while (opcao != 4);
+                            
+                                        
             break;//break do case3
             
             case 0:
@@ -405,10 +413,10 @@ int main(){
      }while (opcao_1 != 0); 
 
         // salvar os dados da pokedex do usuario
-        salvarDados("pokedexUsuario.dat",&pokedex, tamanho);
+        salvarDados("pokedexUsuario.dat",&minhaPokedex, tamanho);
         
    // free(pokedex);
                 
     return 1;
 
-}//main
+}//ma
