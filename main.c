@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include <time.h>
 
+/*a parte de arquivo csv e binário não rodou, apesar de termos tentado*/
 int main(){
  
     // variaveis
@@ -27,8 +28,136 @@ int main(){
     Colecao minhaColecao;  
     Mochila mochila;
     
- 
-    //alocação da pokedex
+    //se o programa ta rodando pela primeira vez, ele cria um arquivo cvs da pokedex, como se fosse um inventário
+    Pokedex minhaPokedex[721];
+
+    FILE *csvFile = fopen("pokedex.csv", "r");
+    FILE* arqBin = fopen("Pokedex.bin", "rb");//modo leitura
+
+    //teste para ver se o arquivo existe ou não
+    if(arqBin == NULL){
+        //o arquivo não existe, então criamos um 
+        FILE* arqBin = fopen("Pokedex.bin", "wb");//modo escrita
+
+        //verifica se deu certo 
+        if(arqBin == NULL){ 
+            printf("Erro ao abrir o arquivo!\n"); 
+            exit(1); 
+        }//if
+
+        //abrir o arquivo.cvs e escrever na estrutura
+        FILE *csvFile = fopen("pokedex.csv", "r");
+        
+        //verifica se deu certo 
+        if(csvFile == NULL){ 
+            printf("Erro ao abrir o arquivo!\n"); 
+            exit(1); 
+        }//if
+
+        //lendo os dados do arquivo e escrevendo no vetor da estrutura
+        for (int i = 0; i < 721; i++){
+            fread(&minhaPokedex[i], sizeof(Pokedex), 721, csvFile);
+        }//for
+
+        //escrever os dados da estrutura no arquivo.bin
+            fwrite(minhaPokedex, sizeof(Pokedex), 721, arqBin);
+    }//if
+
+
+
+
+        //variaveis
+        char line[1024];
+
+        //ler todos os pokemons presentes no arquivo csv
+        while(fgets(line, sizeof(line), csvFile)){
+            
+            //atribuir as strings presentes no arquivo para uma variavel temporaria i
+            char *leitura = strtok(line, ",");
+
+            //numero do pokemon
+            int numero = atoi(leitura);
+            leitura = strtok(NULL, ",");
+
+            //nome do pokemon da linha que está sendo lida
+            char nome[1024];
+            strcpy(nome, leitura);
+            
+            //remover os espaços em branco presentes na string lida
+            removeEspacos(nome);
+
+            //atribuimos as informações presentes no arquivo csv para a estrutura do usuario:
+
+                //numero
+                pokedex.numero = numero;
+
+                // tipo 1
+                leitura = strtok(NULL, ",");
+                strcpy(pokedex.tipo1, leitura);
+                
+                // tipo 2
+                leitura = strtok(NULL, ",");
+                strcpy(pokedex.tipo2, leitura);
+
+                //total
+                leitura = strtok(NULL, ",");
+                pokedex.total = atoi(leitura);
+
+                //hp
+                leitura = strtok(NULL, ",");
+                pokedex.hp = atoi(leitura);
+
+                //ataque
+                leitura = strtok(NULL, ",");
+                pokedex.ataque = atoi(leitura);
+
+                //defesa
+                leitura = strtok(NULL, ",");
+                pokedex.defesa = atoi(leitura);
+
+                //ataque especial
+                leitura = strtok(NULL, ",");
+                pokedex.ataqueEspecial = atoi(leitura);
+
+                //defesa especial
+                leitura = strtok(NULL, ",");
+                pokedex.defesaEspecial = atoi(leitura);
+
+                //velocidade
+                leitura = strtok(NULL, ",");
+                pokedex.velocidade = atoi(leitura);
+
+                //geração
+                leitura = strtok(NULL, ",");
+                pokedex.geracao = atoi(leitura);
+
+                //lendario
+                leitura = strtok(NULL, ",");
+                pokedex.lendario = atoi(leitura);
+
+                // cor
+                leitura = strtok(NULL, ",");
+                strcpy(pokedex.cor,leitura);
+
+                //altura
+                //token = strtok(NULL, ",");
+                // pegar o valor de altura 
+            
+                //peso
+                // taxa de captura
+
+
+
+        //escreve as informações do cvs para a estrutura pokemon
+        fwrite(minhaPokedex, sizeof(Pokedex), 721, arqBin);
+        
+        fclose(arqBin);
+        free();
+        if (csvFile == NULL || txtFile == NULL) {
+        perror("Erro ao abrir os arquivos.");
+        exit(1);
+        }//if
+    }//if para começar o vetor
 
     
     // carregar dados do usuario
